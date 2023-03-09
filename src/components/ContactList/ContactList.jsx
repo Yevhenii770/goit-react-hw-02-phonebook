@@ -1,10 +1,5 @@
 import { PropTypes } from 'prop-types';
-import {
-  UlOfContact,
-  mainDiv,
-  ContactItem,
-  Button,
-} from './ContactList.styled';
+import { UlOfContact, ContactItem, Button } from './ContactList.styled';
 const ContactList = ({ contacts, onDeleteContact }) => (
   <mainDiv>
     <UlOfContact>

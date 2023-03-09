@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 
-export const mainDiv = styled.div`
-  width: 300px;
-  margin: 0;
-  border: 1px solid gray;
-  padding: 20px;
-`;
+// export const mainDiv = styled.div`
+//   width: 300px;
+//   margin: 0;
+//   border: 1px solid gray;
+//   padding: 20px;
+// `;
 export const UlOfContact = styled.ul`
   list-style-type: circle;
   padding: 0;
