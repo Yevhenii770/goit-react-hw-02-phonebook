@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+import Modal from './Modal/Modal';
+import { Button } from '../components/ContactList/ContactList.styled';
 import { nanoid } from 'nanoid';
 
 import { PropTypes } from 'prop-types';
@@ -15,7 +17,21 @@ class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
+    showModal: false,
   };
+
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsed = JSON.parse(contacts);
+
+    if (parsed) {
+      this.setState({ contacts: parsed });
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts)
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
 
   deleteContact = contactId => {
     this.setState(prevState => ({
@@ -47,6 +63,12 @@ class App extends Component {
     this.setState({ filter: e.currentTarget.value });
   };
 
+  togleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
   render() {
     const filterNormilized = this.state.filter.toLowerCase().trim();
     const visibleContacts = this.state.contacts.filter(contact =>
@@ -58,12 +80,29 @@ class App extends Component {
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.formSubmitHandler} />
 
-        <h2>Contacts</h2>
-        <Filter value={this.state.filter} onChange={this.changeFilter} />
-        <ContactList
-          contacts={visibleContacts}
-          onDeleteContact={this.deleteContact}
-        />
+        <Button
+          type="button"
+          style={{
+            marginTop: '10px',
+          }}
+          onClick={this.togleModal}
+        >
+          Contacts
+        </Button>
+        {this.state.showModal && (
+          <Modal onClick={this.togleModal}>
+            <h2>Contacts</h2>
+            <Filter value={this.state.filter} onChange={this.changeFilter} />
+            <ContactList
+              contacts={visibleContacts}
+              onDeleteContact={this.deleteContact}
+            />
+
+            <Button type="button" onClick={this.togleModal}>
+              Close
+            </Button>
+          </Modal>
+        )}
       </div>
     );
   }
