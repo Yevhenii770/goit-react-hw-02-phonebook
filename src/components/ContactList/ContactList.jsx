@@ -1,7 +1,7 @@
 import { PropTypes } from 'prop-types';
 import { UlOfContact, ContactItem, Button } from './ContactList.styled';
 const ContactList = ({ contacts, onDeleteContact }) => (
-  <mainDiv>
+  <div>
     <UlOfContact>
       {contacts.map(({ id, number, name }) => (
         <ContactItem key={id}>
@@ -12,7 +12,7 @@ const ContactList = ({ contacts, onDeleteContact }) => (
         </ContactItem>
       ))}
     </UlOfContact>
-  </mainDiv>
+  </div>
 );
 
 export default ContactList;
